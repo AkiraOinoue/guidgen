@@ -1,7 +1,7 @@
 # guidgen
 ##GUID生成クラス
 クラス定義ファイルは、CGuidGen.h,CGuidGen.cpp
-```
+```c++
 // guidgen.cpp : このファイルには 'main' 関数が含まれています。プログラム実行の開始と終了がそこで行われます。
 //
 
