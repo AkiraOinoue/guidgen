@@ -1,6 +1,12 @@
 # CGuidGen
 ## GUID生成クラス</br>
 クラス定義ファイルは、CGuidGen.h,CGuidGen.cpp</br>
+## 開発ツール
+Microsoft Visual Studio Community 2019
+コンパイラ：C++17
+動作確認OS：Windows 10
+## CGuidGen.h
+## CGuidGen.cpp
 ## 以下は使用サンプルコードです。</br>
 ```c++
 // guidgen.cpp : このファイルには 'main' 関数が含まれています。プログラム実行の開始と終了がそこで行われます。
