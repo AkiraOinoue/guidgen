@@ -2,11 +2,88 @@
 ## GUID生成クラス</br>
 クラス定義ファイルは、CGuidGen.h,CGuidGen.cpp</br>
 ## 開発ツール
-Microsoft Visual Studio Community 2019
-コンパイラ：C++17
-動作確認OS：Windows 10
-## CGuidGen.h
-## CGuidGen.cpp
+Microsoft Visual Studio Community 2019</br>
+コンパイラ：C++17</br>
+動作確認OS：Windows 10</br>
+## CGuidGen.h</br>
+```c++
+#pragma once
+#include <rpc.h>
+#pragma comment( lib, "Rpcrt4.lib" )
+// GUID生成クラス
+class CGuidGen
+{
+public:
+	// 新しいGUID文字列を返す
+	std::string NewGuid(void);
+	// 生のGUIDを取得
+	GUID RawGuid(void);
+private:
+	/*
+	GUIDを文字列に変換する
+	*/
+	std::string GuidToString(
+		GUID* pGuid
+	);
+	/*
+	typedef struct _GUID {
+		unsigned long  Data1;
+		unsigned short Data2;
+		unsigned short Data3;
+		unsigned char  Data4[ 8 ];
+	} GUID;
+	*/
+	// 生のGUID
+	GUID m_guid;
+};
+```
+## CGuidGen.cpp</br>
+```c++
+#include <string>
+#include "CGuidGen.h"
+/*
+    GUIDを文字列に変換する
+*/
+std::string CGuidGen::GuidToString(
+    GUID* pGuid
+)
+{
+    std::string oGuidString;
+    RPC_CSTR aString;
+
+    // GUIDを文字列へ変換する
+    if (RPC_S_OK == ::UuidToString(pGuid, &aString)) {
+
+        // GUIDを結果にセット
+        oGuidString = (CHAR*)aString;
+
+        // GUID文字列の破棄
+        ::RpcStringFree(&aString);
+    }
+
+    // GUIDを返す
+    return(oGuidString);
+}
+// 新しいGUID文字列を返す
+std::string CGuidGen::NewGuid(void)
+{
+    this->m_guid = GUID_NULL;
+    std::string retS = "";
+
+    // GUIDの生成
+    if (S_OK == ::CoCreateGuid(&this->m_guid))
+    {
+        // GUIDを文字列へ変換
+        retS = this->GuidToString(&this->m_guid);
+    }
+    return retS;
+}
+// 生のGUIDを取得
+GUID CGuidGen::RawGuid(void)
+{
+    return this->m_guid;
+}
+```
 ## 以下は使用サンプルコードです。</br>
 ```c++
 // guidgen.cpp : このファイルには 'main' 関数が含まれています。プログラム実行の開始と終了がそこで行われます。
