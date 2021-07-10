@@ -1,4 +1,4 @@
-# guidgen
+# CGuidGen
 ## GUID生成クラス</br>
 クラス定義ファイルは、CGuidGen.h,CGuidGen.cpp</br>
 ## 以下は使用サンプルコードです。</br>
